@@ -3,18 +3,19 @@ import { MusicContext } from "../contexts/MusicContext";
 
 const useMusicplayer = () => {
     const [state, setState] = useContext(MusicContext);
+    console.log(state);
 
 
     const togglePlay = () => {
         if (state.isPlaying) {
             state.audioPlayer.pause();
-            setState({ ...state, isPlaying: false })
+            setState({ ...state, isPlaying: false });
         }
         else {
             state.audioPlayer.play();
-            setState({ ...state, isPlaying: true })
+            setState({ ...state, isPlaying: true });
         }
-    }
+    };
 
     const playTrack = (index) => {
         if (index === state.currentTrackIndex) {
@@ -24,21 +25,19 @@ const useMusicplayer = () => {
             state.audioPlayer.pause();
             state.audioPlayer = new Audio(state.tracks[index].file);
             state.audioPlayer.play();
-            setState({ ...state, currentTrackIndex: index, isPlaying: true })
+            setState({ ...state, currentTrackIndex: index, isPlaying: true });
         }
-    }
+    };
 
     const playPreviousTrack = () => {
         let newIndex = null;
         state.currentTrackIndex === 0 ? (newIndex = state.tracks.length - 1) : (newIndex = state.currentTrackIndex - 1)
         playTrack(newIndex)
-    }
+    };
 
     const playNextTrack = () => {
         let newIndex = null;
-        state.currentTrackIndex === state.currentTrackIndex - 1
-            ? (newIndex = 0)
-            : (newIndex = state.currentTrackIndex + 1)
+        state.currentTrackIndex === state.tracks.length - 1 ? (newIndex = 0) : (newIndex = state.currentTrackIndex + 1)
         playTrack(newIndex)
     }
     return {
@@ -47,13 +46,12 @@ const useMusicplayer = () => {
         playPreviousTrack,
         playNextTrack,
         currentTrackIndex: state.currentTrackIndex,
-        currentTrackName: state.currentTrackIndex !== null &&
-            state.tracks[state.currentTrackIndex].name,
-        trackList: state.tracks,
+        TrackList: state.tracks,
+        currentTrackName: state.currentTrackIndex !== null && state.tracks[state.currentTrackIndex].name,
         isPlaying: state.isPlaying,
 
 
     }
-}
+};
 
 export { useMusicplayer }

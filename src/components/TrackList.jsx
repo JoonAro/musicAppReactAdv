@@ -5,14 +5,14 @@ import { useMusicplayer } from "../hooks/UseMusicContext"
 
 
 const TrackList = () => {
-    const music = useMusicplayer()
+    const music = useMusicplayer();
 
     return (
         <div>
             {music.TrackList.map((track, index) => {
                 return (
                     <div key={`${track.name}_${index}`}>
-                        <button>
+                        <button onClick={() => music.playTrack(index)}>
                             {music.isPlaying && music.currentTrackIndex === index ?
                                 <PauseFill />
                                 :
